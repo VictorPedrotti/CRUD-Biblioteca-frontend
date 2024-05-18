@@ -1,0 +1,13 @@
+<div class="header-menu-lateral">
+  <img width="100" height="100" src="/assets/logo.jpg">
+  <div class="nome-biblioteca">
+    <h2> Biblioteca </h2>
+  </div>
+</div>
+
+<mat-nav-list>
+  <a mat-list-item *ngFor="let item of menuItens">
+    <mat-icon matListItemIcon>{{ item.icone }}</mat-icon>
+    <span matListItemTitle>{{ item.descricao }} </span>
+  </a>
+</mat-nav-list>
