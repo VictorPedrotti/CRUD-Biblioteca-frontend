@@ -10,6 +10,7 @@
 }
 
 .nome-biblioteca {
+  height: 3rem;
   > h2 {
     margin: 0;
     font-size: 1rem;
@@ -26,3 +27,19 @@
 .mat-list-item {
   text-align: center;
 }
+
+.remove-nome {
+  opacity: 0;
+  height: 0 !important;
+}
+
+.item-menu {
+  border-left: 5px solid;
+  border-left-color: rgba(0, 0, 0, 0);
+}
+
+.menu-selecionado {
+  border-left-color: indigo;
+  background: rgba(0, 0, 0, 0.05);
+}
+

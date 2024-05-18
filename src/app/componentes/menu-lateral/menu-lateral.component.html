@@ -1,13 +1,23 @@
 <div class="header-menu-lateral">
-  <img width="100" height="100" src="/assets/logo.jpg">
-  <div class="nome-biblioteca">
-    <h2> Biblioteca </h2>
+  <img [width]="logoBiblioteca()" [height]="logoBiblioteca()" src="/assets/logo.jpg">
+  <div class="nome-biblioteca" [class.remove-nome]="menuLateralCollapsed()">
+    <h2> BIBLIOTECA </h2>
   </div>
 </div>
 
 <mat-nav-list>
-  <a mat-list-item *ngFor="let item of menuItens">
-    <mat-icon matListItemIcon>{{ item.icone }}</mat-icon>
-    <span matListItemTitle>{{ item.descricao }} </span>
+  <a
+    mat-list-item
+    class="item-menu"
+    *ngFor="let item of menuItens()" 
+    [routerLink]="item.rota"
+    routerLinkActive="menu-selecionado"
+    #rla="routerLinkActive"
+    [activated]="rla.isActive"
+    [class.rota-ativa]="rla.isActive"
+    >
+    <mat-icon [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'" 
+      matListItemIcon>{{ item.icone }}</mat-icon>
+    <span matListItemTitle *ngIf="!menuLateralCollapsed()">{{ item.descricao }}</span>
   </a>
 </mat-nav-list>

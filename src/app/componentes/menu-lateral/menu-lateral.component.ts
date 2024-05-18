@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, Input, OnInit, computed, signal} from '@angular/core';
 import { MenuItem } from './menu-lateral.interface';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -10,17 +11,24 @@ import { MatListModule } from '@angular/material/list';
   imports: [
     CommonModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    RouterLink,
+    RouterModule
   ],
   templateUrl: './menu-lateral.component.html',
   styleUrl: './menu-lateral.component.css'
 })
-export class MenuLateralComponent {
+export class MenuLateralComponent implements OnInit{
 
-menuItens: MenuItem[] = []
+  menuLateralCollapsed = signal(false);
+  @Input() set collapsed(val: boolean){
+    this.menuLateralCollapsed.set(val);
+  }
 
-  ngOnInit() {
-    this.menuItens = [
+  menuItens = signal<MenuItem[]>([])
+
+  ngOnInit(){
+    this.menuItens.set([
       {
         descricao: "Autores",
         icone: "account_circle",
@@ -50,8 +58,11 @@ menuItens: MenuItem[] = []
         descricao: "Pedidos",
         icone: "receipt",
         rota: "/pedidos",
-      },
-    ]
+      }
+    ])
   }
   
-}
+
+    logoBiblioteca = computed(() => this.menuLateralCollapsed() ? '32' : '100')
+  }
+  

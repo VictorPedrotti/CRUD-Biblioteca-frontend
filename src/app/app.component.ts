@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -25,4 +25,9 @@ import { MenuLateralComponent } from "./componentes/menu-lateral/menu-lateral.co
 })
 export class AppComponent {
   title = 'biblioteca';
+
+  collapsed = signal(false);
+
+  sidenavWidth = computed(() => (
+    this.collapsed() ? '65px' : '250px'));
 }
