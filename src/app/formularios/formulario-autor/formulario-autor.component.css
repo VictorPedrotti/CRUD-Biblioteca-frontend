@@ -1,0 +1,6 @@
+.titulo {
+  justify-content: center;
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

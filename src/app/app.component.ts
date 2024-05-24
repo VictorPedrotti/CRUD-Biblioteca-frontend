@@ -8,8 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MenuLateralComponent } from "./componentes/menu-lateral/menu-lateral.component";
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Dialog } from '@angular/cdk/dialog';
-import { CaixaDialogoComponent } from './componentes/caixa-dialogo/caixa-dialogo.component';
+import { FormularioAutorComponent } from './formularios/formulario-autor/formulario-autor.component';
 
 @Component({
     selector: 'app-root',
@@ -39,8 +38,8 @@ export class AppComponent {
 
       
   abrirCaixaDeFormulario() {
-    this.dialog.open(CaixaDialogoComponent, {
-        width:'30%'
+    this.dialog.open(FormularioAutorComponent, {
+        width:'30%',
     })
   }
 }
