@@ -1,15 +1,15 @@
 <div class="conteudo-dialog">
   <h1 mat-dialog-title class="titulo">Adicionar novo autor</h1>
-  <form [formGroup]="autorForm">
-    <mat-form-field appearence="outline">
+  <form [formGroup]="autorForm" class="form-container">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Nome</mat-label>
       <input matInput placeholder="Nome do autor" formControlName="nome" />
     </mat-form-field>
-    <mat-form-field appearence="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Nacionalidade</mat-label>
       <input matInput placeholder="Nacionalidade do autor" formControlName="nacionalidade" />
     </mat-form-field>
-    <mat-form-field appearence="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Data de Nascimento</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="data_nascimento" />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
