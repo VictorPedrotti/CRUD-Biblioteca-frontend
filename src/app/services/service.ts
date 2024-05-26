@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, InjectionToken, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, BehaviorSubject  } from 'rxjs';
 
 export const API = new InjectionToken<string>('apiUrl')
 
@@ -10,7 +11,8 @@ export const API = new InjectionToken<string>('apiUrl')
 
 export class Service<T> {
 
-  constructor(private http: HttpClient, @Inject(API) private apiUrl: string) {}
+  constructor(
+    private http: HttpClient, @Inject(API) private apiUrl: string) {}
 
   obterTodos(): Observable<T[]> {
     return this.http.get<T[]>(this.apiUrl);

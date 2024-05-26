@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AutorService } from '../../services/autorService/autor.service';
 import { Autor } from './autor';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { TabelaComponent } from '../../componentes/tabela/tabela.component';
 
 @Component({
   selector: 'app-autores',
@@ -14,6 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     RouterLink,
     HttpClientModule,
     MatIconModule,
+    MatTableModule,
+    TabelaComponent
   ],
   templateUrl: './autores.component.html',
   styleUrl: './autores.component.css'
@@ -21,6 +25,14 @@ import { MatIconModule } from '@angular/material/icon';
 export class AutoresComponent implements OnInit {
 
   autores: Autor[] = [];
+  colunasTabela: string[] = ['Nome', 'Nacionalidade', 'Data de Nascimento'];
+
+  mapeamentoColunas: { [key: string]: string } = {
+    'Nome': 'nome',
+    'Nacionalidade': 'nacionalidade',
+    'Data de Nascimento': 'data_nascimento'
+  };
+
 
   constructor(private autorService: AutorService) {}
   

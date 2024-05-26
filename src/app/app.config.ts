@@ -4,11 +4,13 @@ import { MatNativeDateModule, DateAdapter, NativeDateAdapter, MAT_DATE_LOCALE, M
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
+    DatePipe,
     MatNativeDateModule,
     { provide: DateAdapter, useClass: NativeDateAdapter},
     { provide: MAT_DATE_LOCALE, useValue: 'pt-br'},

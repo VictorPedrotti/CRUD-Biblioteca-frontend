@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,15 +24,22 @@ export class FormularioAutorComponent {
 
   autorForm!: FormGroup;
 
-  constructor() {
+  constructor(private datePipe: DatePipe) {
     this.autorForm = new FormGroup({
       nome: new FormControl('', Validators.required),
       nacionalidade: new FormControl('', Validators.required),
       data_nascimento: new FormControl('', Validators.required)
     })
   }
-
-  cancelar(){
-
+  salvarAutor(){
+    if(this.autorForm.valid){
+      const formValue = this.autorForm.value;
+      const DataFormatada = this.datePipe.transform(formValue.data_nascimento, 'dd-MM-yyyy')
+      const autorData = {
+        ...formValue,
+        data_nascimento: DataFormatada
+      };
+      console.log(autorData)
+    }
   }
 }
