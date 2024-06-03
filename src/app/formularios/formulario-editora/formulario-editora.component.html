@@ -1,1 +1,25 @@
-<p>formulario-editora works!</p>
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar nova editora</h1>
+  <form [formGroup]="editoraForm" class="form-container" (ngSubmit)="salvarEditora()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Nome da editora" formControlName="nome" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Data de Fundação</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data_fundacao" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="editoraForm.invalid"
+          [ngClass]="editoraForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar Editora
+      </button>
+  </div>
+  </form>
+</div>
+
+

@@ -1,1 +1,19 @@
-<p>formulario-genero works!</p>
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar novo gênero</h1>
+  <form [formGroup]="generoForm" class="form-container" (ngSubmit)="salvarGenero()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Descrição</mat-label>
+      <input matInput placeholder="Descrição do gênero" formControlName="descricao" />
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="generoForm.invalid"
+          [ngClass]="generoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar Gênero
+      </button>
+  </div>
+  </form>
+</div>
+
+

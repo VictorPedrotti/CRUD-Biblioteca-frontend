@@ -21,3 +21,68 @@ mat-form-field{
   align-items: center; 
 }
 
+.titulo {
+  justify-content: center;
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.conteudo-dialog {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field {
+  margin-bottom: 10px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.botao-cancelar,
+.botao-salvar,
+.botao-desabilitado {
+  margin: 10px;
+  width: 135px;
+  height: 41px;
+  padding: 6px, 12px;
+  border-radius: 4px;
+  border: 1px;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.botao-cancelar {
+  color: #FFFFFF;
+  background-color: indigo;
+  border: 1px solid #FFFFFF;
+  cursor: pointer;
+
+}
+
+.botao-salvar {
+  color: #FFFFFF;
+  background-color: indigo;
+  cursor: pointer;
+}
+
+.botao-desabilitado {
+  background-color: #ADB5BD;
+  cursor: not-allowed;
+}
+

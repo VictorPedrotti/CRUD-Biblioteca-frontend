@@ -1,1 +1,63 @@
-<p>formulario-livro works!</p>
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar novo livro</h1>
+  <form [formGroup]="livroForm" class="form-container" (ngSubmit)="salvarLivro()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Título</mat-label>
+      <input matInput placeholder="Título do livro" formControlName="titulo" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Data de Publicação</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data_publicacao" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Preço</mat-label>
+      <input matInput placeholder="Preço do livro" formControlName="preco" type="number" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Número de Páginas</mat-label>
+      <input matInput placeholder="Número de Páginas" formControlName="numero_paginas" type="number"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Editora</mat-label>
+      <mat-select formControlName="editora_id" placeholder="Selecione uma Editora">
+        <mat-option *ngFor="let editora of editoras" [value]="editora.id">
+          {{ editora.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Gênero</mat-label>
+      <mat-select formControlName="genero_id" placeholder="Selecione o Gênero">
+        <mat-option *ngFor="let genero of generos" [value]="genero.id">
+          {{ genero.descricao }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Autor</mat-label>
+      <mat-select formControlName="autor_id" placeholder="Selecione o Autor">
+        <mat-option *ngFor="let autor of autores" [value]="autor.id">
+          {{ autor.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Fornecedor</mat-label>
+      <mat-select formControlName="fornecedor_id" placeholder="Selecione o Fornecedor">
+        <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+          {{ fornecedor.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="livroForm.invalid"
+          [ngClass]="livroForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar Livro
+      </button>
+    </div>
+  </form>
+</div>

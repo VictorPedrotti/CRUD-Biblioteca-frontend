@@ -16,7 +16,7 @@ import { TabelaComponent } from '../../componentes/tabela/tabela.component';
     RouterLink,
     HttpClientModule,
     MatIconModule,
-    MatTableModule,
+    MatTableModule, 
     TabelaComponent
   ],
   templateUrl: './autores.component.html',

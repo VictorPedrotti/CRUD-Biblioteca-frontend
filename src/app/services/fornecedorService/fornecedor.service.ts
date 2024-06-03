@@ -8,7 +8,7 @@ import { Fornecedor } from '../../paginas/fornecedores/fornecedor';
 })
 export class FornecedorService extends Service<Fornecedor> {
 
-  private static readonly apiUrl = 'http://localhost:3000/fornecedor';
+  private static readonly apiUrl = 'http://localhost:3000/fornecedores';
 
   constructor(http: HttpClient) {
     super(http, FornecedorService.apiUrl);
