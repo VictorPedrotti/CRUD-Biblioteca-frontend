@@ -1,0 +1,43 @@
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar novo livro</h1>
+  <form [formGroup]="avaliacaoForm" class="form-container" (ngSubmit)="salvarAvaliacao()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="cliente_id" placeholder="Selecione o Cliente">
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Livro</mat-label>
+      <mat-select formControlName="livro_id" placeholder="Selecione o Livro">
+        <mat-option *ngFor="let livro of livros" [value]="livro.id">
+          {{ livro.titulo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Data da Avaliação</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data_avaliacao" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nota da Avaliação</mat-label>
+      <input matInput placeholder="Nota da avaliação" formControlName="avaliacao" type="number"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Comentário</mat-label>
+      <input matInput placeholder="Comentário da avaliação" formControlName="comentario" type="textarea"/>
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="avaliacaoForm.invalid"
+          [ngClass]="avaliacaoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar
+      </button>
+    </div>
+  </form>
+</div>

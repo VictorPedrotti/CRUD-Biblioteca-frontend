@@ -1,5 +1,5 @@
 <div class="conteudo-dialog">
-  <h1 mat-dialog-title class="titulo">Adicionar novo cliente</h1>
+  <h1 mat-dialog-title class="titulo">{{titulo}}</h1>
   <form [formGroup]="clienteForm" class="form-container" (ngSubmit)="salvarCliente()">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Nome</mat-label>
@@ -22,7 +22,7 @@
       <button 
           [disabled]="clienteForm.invalid"
           [ngClass]="clienteForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
-          type="submit">Salvar Autor
+          type="submit">Salvar
       </button>
   </div>
   </form>

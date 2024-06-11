@@ -15,7 +15,7 @@ import { EditoraService } from '../../services/editoraService/editora.service';
 export class EditorasComponent implements OnInit {
 
   editoras: Editora[] = []; 
-  colunasTabela: string[] = ['Nome', 'Data de Fundação'];
+  colunasTabela: string[] = ['Nome', 'Data de Fundação', 'Ações'];
 
   mapeamentoColunas: { [key: string]: string } = {
     'Nome': 'nome',

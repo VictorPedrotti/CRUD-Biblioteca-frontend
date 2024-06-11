@@ -1,5 +1,5 @@
 <div class="conteudo-dialog">
-  <h1 mat-dialog-title class="titulo">Adicionar novo autor</h1>
+  <h1 mat-dialog-title class="titulo">{{titulo}}</h1>
   <form [formGroup]="autorForm" class="form-container" (ngSubmit)="salvarAutor()">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Nome</mat-label>
@@ -20,7 +20,7 @@
       <button 
           [disabled]="autorForm.invalid"
           [ngClass]="autorForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
-          type="submit">Salvar Autor
+          type="submit">Salvar
       </button>
   </div>
   </form>

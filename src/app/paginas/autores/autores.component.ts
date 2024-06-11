@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'; 
 import { AutorService } from '../../services/autorService/autor.service';
@@ -25,7 +25,7 @@ import { TabelaComponent } from '../../componentes/tabela/tabela.component';
 export class AutoresComponent implements OnInit {
 
   autores: Autor[] = [];
-  colunasTabela: string[] = ['Nome', 'Nacionalidade', 'Data de Nascimento'];
+  colunasTabela: string[] = ['Nome', 'Nacionalidade', 'Data de Nascimento', 'Ações'];
 
   mapeamentoColunas: { [key: string]: string } = {
     'Nome': 'nome',
@@ -41,4 +41,6 @@ export class AutoresComponent implements OnInit {
       this.autores = listaAutores;
     });
   }
+
+
 }

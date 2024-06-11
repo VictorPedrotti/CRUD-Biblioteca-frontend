@@ -1,5 +1,5 @@
 <div class="conteudo-dialog">
-  <h1 mat-dialog-title class="titulo">Adicionar nova editora</h1>
+  <h1 mat-dialog-title class="titulo">{{titulo}}</h1>
   <form [formGroup]="editoraForm" class="form-container" (ngSubmit)="salvarEditora()">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Nome</mat-label>
@@ -16,7 +16,7 @@
       <button 
           [disabled]="editoraForm.invalid"
           [ngClass]="editoraForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
-          type="submit">Salvar Editora
+          type="submit">Salvar
       </button>
   </div>
   </form>

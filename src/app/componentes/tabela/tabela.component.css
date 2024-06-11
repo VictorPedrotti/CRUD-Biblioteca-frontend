@@ -1,4 +1,22 @@
 .container-tabela {
-  margin-left: 50px;
-  margin-right: 50px;
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+.acoes {
+  text-align: center; 
+}
+
+.botao-editar {
+  color: #3f577f; 
+  background-color: #e8f0fe;
+  padding: 4px;
+  margin: 0 2.5px;
+}
+
+.botao-excluir{
+  color: #c02942; 
+  background-color: #fcefee; 
+  padding: 4px;
+  margin: 0 2.5px;
 }

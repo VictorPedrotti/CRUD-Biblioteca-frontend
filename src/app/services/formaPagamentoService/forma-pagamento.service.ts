@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Service } from '../service';
-import { FormaPagamento } from '../../paginas/formasPagamento/forma-pagamento';
+import { FormaPagamento } from '../../paginas/formas-pagamento/forma-pagamento';
 
 @Injectable({
   providedIn: 'root'

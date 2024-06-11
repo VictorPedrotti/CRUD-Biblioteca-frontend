@@ -58,11 +58,20 @@ export class MenuLateralComponent implements OnInit{
         descricao: "Pedidos",
         icone: "receipt",
         rota: "/pedidos",
+      },
+      {
+        descricao: "Fornecedores",
+        icone: "local_shipping",
+        rota: "/fornecedores"
+      },
+      {
+        descricao: "Avaliações",
+        icone: "star_rate",
+        rota: "/avaliacoes"
       }
     ])
   }
-  
+
 
     logoBiblioteca = computed(() => this.menuLateralCollapsed() ? '32' : '100')
   }
-  

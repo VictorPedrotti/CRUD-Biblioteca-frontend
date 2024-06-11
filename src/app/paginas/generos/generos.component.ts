@@ -12,7 +12,7 @@ import { Genero } from './genero';
 })
 export class GenerosComponent implements OnInit{
 
-  colunasTabela: string[] = ['Descrição']
+  colunasTabela: string[] = ['Descrição', 'Ações']
   generos: Genero[] = [];
   
   mapeamentoColunas: { [key: string]: string } = {

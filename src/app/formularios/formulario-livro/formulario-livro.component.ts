@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -16,6 +16,8 @@ import { GeneroService } from '../../services/generoService/genero.service';
 import { FornecedorService } from '../../services/fornecedorService/fornecedor.service';
 import { Genero } from '../../paginas/generos/genero';
 import { Fornecedor } from '../../paginas/fornecedores/fornecedor';
+import { LivroService } from '../../services/livroService/livro.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -42,12 +44,18 @@ export class FormularioLivroComponent implements OnInit{
   autores: Autor[] = [];
   generos: Genero[] = [];
   fornecedores: Fornecedor[] = [];
-
+  titulo!: string; 
+  
   constructor(
     private editoraService: EditoraService, 
     private autorService: AutorService,
     private generoService: GeneroService,
-    private fornecedorService: FornecedorService
+    private fornecedorService: FornecedorService,
+    private livroService: LivroService,
+    private dialogRef: MatDialogRef<FormularioLivroComponent>,
+    private datePipe: DatePipe, 
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public dados: any
 
   ) {
     this.livroForm = new FormGroup({
@@ -66,6 +74,8 @@ export class FormularioLivroComponent implements OnInit{
     this.carregarAutores();
     this.carregarGeneros();
     this.carregarFornecedores();
+
+    this.titulo = this.dados.estaEditando ? 'Editar livro' : 'Adicionar novo livro';
   }
 
   carregarEditoras(): void {
@@ -93,7 +103,25 @@ export class FormularioLivroComponent implements OnInit{
   }
 
   salvarLivro() {
-    console.log(this.livroForm)
+    if(this.livroForm.valid){
+      const valorForm = this.livroForm.value;
+      const DataFormatada = this.datePipe.transform(valorForm.data_publicacao, 'yyyy-MM-dd')
+      const livroData = {
+        ...valorForm,
+        data_publicacao: DataFormatada
+      };
+      
+      this.livroService.salvarNovo(livroData).subscribe({
+        next: res => {
+          this.dialogRef.close();
+          this.snackBar.open('Novo livro cadastrado com sucesso', 'Fechar', { duration: 3000 })
+        },
+        error: err => {
+          console.error('Erro ao salvar livro:', err)
+          this.snackBar.open('Erro ao cadastrar livro, tente novamente', 'Fechar', { duration: 3000 })
+        }
+      }) 
+    }
   }
 }
 

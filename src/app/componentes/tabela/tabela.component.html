@@ -10,7 +10,20 @@
       <ng-container *ngFor="let coluna of colunas">
         <ng-container [matColumnDef]="coluna">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ coluna }} </th>
-          <td mat-cell *matCellDef="let row"> {{ row[mapeamentoColunas[coluna]] }} </td>
+          <td mat-cell *matCellDef="let row">
+            <ng-container *ngIf="coluna !== 'Ações'">
+              <span *ngIf="filtrarColunasData().includes(coluna)">{{ formatarData(row[mapeamentoColunas[coluna]]) }}</span>
+              <span *ngIf="!filtrarColunasData().includes(coluna)">{{ row[mapeamentoColunas[coluna]] }}</span>
+            </ng-container>
+            <ng-container *ngIf="coluna === 'Ações'">
+              <button mat-icon-button class="botao-editar" (click)="editarRegistro(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="botao-excluir" (click)="excluirRegistro(row)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-container>
+          </td>
         </ng-container>
       </ng-container>
 

@@ -12,7 +12,7 @@ import { TabelaComponent } from "../../componentes/tabela/tabela.component";
 })
 export class ClientesComponent implements OnInit{
 
-  colunasTabela: string[] = ['Nome', 'CPF', 'E-mail', 'Telefone']
+  colunasTabela: string[] = ['Nome', 'CPF', 'E-mail', 'Telefone', 'Ações']
   clientes: Cliente[] = [];
   
   mapeamentoColunas: { [key: string]: string } = {

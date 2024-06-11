@@ -5,6 +5,9 @@ import { GenerosComponent } from './paginas/generos/generos.component';
 import { ClientesComponent } from './paginas/clientes/clientes.component';
 import { PedidosComponent } from './paginas/pedidos/pedidos.component';
 import { EditorasComponent } from './paginas/editoras/editoras.component';
+import { FornecedoresComponent } from './paginas/fornecedores/fornecedores.component';
+import { FormasPagamentoComponent } from './paginas/formas-pagamento/formas-pagamento.component';
+import { AvaliacoesComponent } from './paginas/avaliacoes/avaliacoes.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +38,17 @@ export const routes: Routes = [
   {
     path: 'editoras',
     component: EditorasComponent
+  },
+  {
+    path: 'fornecedores',
+    component: FornecedoresComponent
+  },
+  {
+    path: 'formasPagamento',
+    component: FormasPagamentoComponent
+  },
+  {
+    path: 'avaliacoes',
+    component: AvaliacoesComponent
   }
 ];

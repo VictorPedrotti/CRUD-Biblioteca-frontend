@@ -1,0 +1,25 @@
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar novo fornecedor</h1>
+  <form [formGroup]="fornecedorForm" class="form-container" (ngSubmit)="salvarFornecedor()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Nome do fornecedor" formControlName="nome" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>E-mail</mat-label>
+      <input matInput placeholder="E-mail do fornecedor" formControlName="email" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Telefone</mat-label>
+      <input matInput placeholder="Telefone do fornecedor" formControlName="telefone" />
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="fornecedorForm.invalid"
+          [ngClass]="fornecedorForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar
+      </button>
+  </div>
+  </form>
+</div>
