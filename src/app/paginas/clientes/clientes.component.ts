@@ -22,9 +22,19 @@ export class ClientesComponent implements OnInit{
     'Telefone': 'telefone',
   };
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private clienteService: ClienteService) {
+    this.clienteService.acao$.subscribe(({
+      next: (res) => {
+        this.listarClientes()
+      }
+    }))
+  }
   
   ngOnInit(): void {
+    this.listarClientes();
+  }
+
+  listarClientes() {
     this.clienteService.obterTodos().subscribe((clientes: Cliente[]) => {
       this.clientes = clientes;
     })

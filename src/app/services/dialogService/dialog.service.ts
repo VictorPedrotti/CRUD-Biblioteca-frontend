@@ -16,6 +16,9 @@ import { ClienteService } from '../clienteService/cliente.service';
 import { EditoraService } from '../editoraService/editora.service';
 import { FornecedorService } from '../fornecedorService/fornecedor.service';
 import { AvaliacaoService } from '../avaliacaoService/avaliacao.service';
+import { FormularioPedidoComponent } from '../../formularios/formulario-pedido/formulario-pedido.component';
+import { PedidoService } from '../pedidoService/pedido.service';
+import { FormularioItensPedidoComponent } from '../../formularios/formulario-itens-pedido/formulario-itens-pedido.component';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +34,9 @@ export class DialogService {
     private clienteService: ClienteService,
     private editoraService: EditoraService,
     private fornecedorService: FornecedorService,
-    private avaliacaoService: AvaliacaoService
+    private avaliacaoService: AvaliacaoService,
+    private pedidoService: PedidoService
+    
   ) {}
 
   formularioPorRotaAtiva(): {componente: ComponentType<any>, servico: any }| undefined {
@@ -58,6 +63,9 @@ export class DialogService {
         break;
       case '/avaliacoes':
         return {componente: FormularioAvaliacaoComponent, servico: this.avaliacaoService};
+        break;
+      case '/pedidos':
+        return {componente: FormularioPedidoComponent, servico: this.pedidoService};
       default:
         return undefined;
     }
@@ -82,5 +90,12 @@ export class DialogService {
         data: { estaEditando: false }
       })
     }
+  }
+
+  dialogItensPedido(dados: { id: number }) {
+    this.dialog.open(FormularioItensPedidoComponent, {
+      width: '30%',
+      data: dados
+    })
   }
 }

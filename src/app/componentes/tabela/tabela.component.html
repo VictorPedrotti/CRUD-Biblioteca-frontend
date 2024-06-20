@@ -23,6 +23,14 @@
                 <mat-icon>delete</mat-icon>
               </button>
             </ng-container>
+            <ng-container *ngIf="coluna === 'Itens Pedido'">
+              <button mat-icon-button class="botao-adicionar" (click)="adicionarItensPedido(row)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button class="botao-visualizar" (click)="visualizarItensPedido(row)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </ng-container>
           </td>
         </ng-container>
       </ng-container>

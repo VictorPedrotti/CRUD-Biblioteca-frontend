@@ -9,6 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../../services/dialogService/dialog.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AutorService } from '../../services/autorService/autor.service';
+import { Livro } from '../../paginas/livros/livro';
+import { ClienteService } from '../../services/clienteService/cliente.service';
+import { Pedido } from '../../paginas/pedidos/pedido';
+import { Avaliacao } from '../../paginas/avaliacoes/avaliacao';
+import { FornecedorService } from '../../services/fornecedorService/fornecedor.service';
+import { EditoraService } from '../../services/editoraService/editora.service';
 
 @Component({
   selector: 'app-tabela',
@@ -31,6 +39,11 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef, 
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
+    private router: Router,
+    private autorService: AutorService,
+    private clienteService: ClienteService,
+    private fornecedorService: FornecedorService,
+    private editoraService: EditoraService
 
   ) {}
 
@@ -39,6 +52,9 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   @Input() mapeamentoColunas: { [key: string]: string } = {};
 
   dataSource = new MatTableDataSource<any>();
+  listaLivros: Livro[] = [];
+  listaPedidos: Pedido[] = [];
+  listaAvaliacoes: Avaliacao[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -71,17 +87,74 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     this.dialogService.abrirDialogEdicao(dados) 
   }
 
-  excluirRegistro(row: any) {
-    const servico = this.dialogService.formularioPorRotaAtiva()?.servico
-    if(confirm('Tem certeza que deseja excluir esse registro?')) {
-      servico.excluirRegistro(row.id).subscribe(() => {
-        this.snackBar.open('Registro excluído com sucesso', 'Fechar', { duration: 3000 })
-      },
-      (error: HttpErrorResponse) => {
+  async validarAutorComLivros(id: number): Promise<boolean> {
+    const listaLivros = await this.autorService.buscarLivrosPorAutorId(id).toPromise();
+    return (listaLivros ?? []).length > 0;
+  }
+
+  async validarFornecedorComLivros(id: number): Promise<boolean> {
+    const listaLivrosFornecedor = await this.fornecedorService.buscarLivrosPorFornecedorId(id).toPromise();
+    return (listaLivrosFornecedor ?? []).length > 0;
+  }
+
+  async validarEditoraComLivros(id: number): Promise<boolean> {
+    const listaLivrosEditora = await this.editoraService.buscarLivrosPorEditoraId(id).toPromise();
+    return (listaLivrosEditora ?? []).length > 0;
+  }
+  
+  async validarClienteComPedidosEAvaliacoes(id: number): Promise<boolean> {
+    const [listaPedidos, listaAvaliacoes] = await Promise.all([
+      this.clienteService.buscarPedidosPorClienteId(id).toPromise(),
+      this.clienteService.buscarAvaliacoesPorClienteId(id).toPromise()
+    ]);
+  
+    return (listaPedidos ?? []).length > 0 || (listaAvaliacoes ?? []).length > 0;
+  }
+  
+  async excluirRegistro(row: any) {
+    const servico = this.dialogService.formularioPorRotaAtiva()?.servico;
+  
+    if (servico === this.autorService) {
+      const temLivros = await this.validarAutorComLivros(row.id);
+      if (temLivros) {
+        this.snackBar.open('O autor possui livros de sua autoria cadastrados, não é possível excluir', 'Fechar', { duration: 3000 });
+        return;
+      }
+    }
+  
+    if (servico === this.clienteService) {
+      const temPedidosOuAvaliacoes = await this.validarClienteComPedidosEAvaliacoes(row.id);
+      if (temPedidosOuAvaliacoes) {
+        this.snackBar.open('O cliente possui avaliações ou pedidos cadastrados, não é possível excluir', 'Fechar', { duration: 3000 });
+        return;
+      }
+    }
+
+    if (servico === this.editoraService) {
+      const temLivrosEditora = await this.validarEditoraComLivros(row.id);
+      if (temLivrosEditora) {
+        this.snackBar.open('A editora possui livros associados, não é possível excluir', 'Fechar', { duration: 3000 });
+        return;
+      }
+    }
+
+    if (servico === this.fornecedorService) {
+      const temLivrosFornecedor = await this.validarFornecedorComLivros(row.id);
+        if (temLivrosFornecedor) {
+          this.snackBar.open('O fornecedor possui livros associados, não é possível excluir', 'Fechar', { duration: 3000 });
+          return;
+        }
+      }
+  
+    if (confirm('Tem certeza que deseja excluir esse registro?')) {
+      try {
+        await servico.excluirRegistro(row.id).toPromise();
+        this.snackBar.open('Registro excluído com sucesso', 'Fechar', { duration: 3000 });
+        servico.atualizaConsulta.next(1);
+      } catch (error) {
         console.error('Erro ao excluir registro', error);
         this.snackBar.open('Erro ao excluir registro', 'Fechar', { duration: 3000 });
       }
-    )
     }
   }
 
@@ -94,5 +167,16 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   filtrarColunasData(): string[] {
  
     return this.colunas.filter(coluna => coluna.includes('Data'));
+  }
+
+  adicionarItensPedido(row: any) {
+    const id = row.id
+    this.dialogService.dialogItensPedido({ id });
+  }
+
+
+  visualizarItensPedido(row: any) {
+    const id = row.id
+    this.router.navigate([`/pedidos/${id}/itens`]);
   }
 }

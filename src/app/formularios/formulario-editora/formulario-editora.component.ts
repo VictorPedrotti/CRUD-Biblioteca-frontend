@@ -45,8 +45,8 @@ export class FormularioEditoraComponent implements OnInit {
     this.titulo = this.estaEditando ? 'Editar editora' : 'Adicionar nova editora';
 
     this.editoraForm = new FormGroup({
-      nome: new FormControl(this.dados.registro.nome || '', Validators.required),
-      data_fundacao: new FormControl(converterParaDataSemFusoHorario(this.dados.registro.data_fundacao) || '', Validators.required)
+      nome: new FormControl(this.dados.registro?.nome || '', Validators.required),
+      data_fundacao: new FormControl(converterParaDataSemFusoHorario(this.dados.registro?.data_fundacao) || '', Validators.required)
     })
   }
 
@@ -64,6 +64,7 @@ export class FormularioEditoraComponent implements OnInit {
           next: res => {
             this.dialogRef.close();
             this.snackBar.open('Registro alterado com sucesso', 'Fechar', { duration: 3000 })
+            this.editoraService.atualizaConsulta.next(1);
           },
           error: err => {
             console.log('Erro ao atualizar registro:', err);
@@ -74,11 +75,12 @@ export class FormularioEditoraComponent implements OnInit {
         this.editoraService.salvarNovo(editoraData).subscribe({
           next: res => {
             this.dialogRef.close();
-            alert('Editora salva com sucesso')
+            this.snackBar.open('Editora salva com sucesso', 'Fechar', { duration: 3000 })
+            this.editoraService.atualizaConsulta.next(1);
           },
           error: err => {
             console.error('Erro ao salvar editora:', err)
-            alert('Erro ao salvar editora, por favor tente novamente.')
+            this.snackBar.open('Erro ao salvar editora, por favor tente novamente', 'Fechar', { duration: 3000 })
           }
         })
       }

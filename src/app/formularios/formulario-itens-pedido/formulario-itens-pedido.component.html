@@ -1,1 +1,30 @@
-<p>formulario-itens-pedido works!</p>
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar Itens Pedido</h1>
+  <form [formGroup]="itensPedidoForm" class="form-container" (ngSubmit)="ProcessarItensPedido()">
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Pedido</mat-label>
+    <input matInput placeholder="Número do Pedido" formControlName="pedido_id" type="number" readonly/>
+  </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Livro</mat-label>
+      <mat-select formControlName="livro_id" placeholder="Selecione o Livro">
+        <mat-option *ngFor="let livro of livros" [value]="livro.id">
+          {{ livro.titulo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Quantidade</mat-label>
+      <input matInput placeholder="Quantidade" formControlName="quantidade" type="number" />
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="itensPedidoForm.invalid"
+          [ngClass]="itensPedidoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar
+      </button>
+  </div>
+  </form>
+</div>
+

@@ -18,6 +18,7 @@ import { Genero } from '../../paginas/generos/genero';
 import { Fornecedor } from '../../paginas/fornecedores/fornecedor';
 import { LivroService } from '../../services/livroService/livro.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { converterParaDataSemFusoHorario } from '../../utils/converteDataString';
 
 
 @Component({
@@ -44,7 +45,8 @@ export class FormularioLivroComponent implements OnInit{
   autores: Autor[] = [];
   generos: Genero[] = [];
   fornecedores: Fornecedor[] = [];
-  titulo!: string; 
+  titulo!: string;
+  estaEditando!: boolean;
   
   constructor(
     private editoraService: EditoraService, 
@@ -57,25 +59,27 @@ export class FormularioLivroComponent implements OnInit{
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public dados: any
 
-  ) {
-    this.livroForm = new FormGroup({
-      titulo: new FormControl('', Validators.required),
-      data_publicacao: new FormControl('', Validators.required),
-      preco: new FormControl('', [Validators.required, Validators.min(1)]),
-      numero_paginas: new FormControl('', Validators.required),
-      genero_id: new FormControl('', Validators.required),
-      editora_id: new FormControl('', Validators.required),
-      autor_id: new FormControl('', Validators.required),
-      fornecedor_id: new FormControl('', Validators.required),
-    })
-  }
+  ) {}
+
   ngOnInit(): void {
+    this.estaEditando = this.dados.estaEditando;
+    this.titulo = this.dados.estaEditando ? 'Editar livro' : 'Adicionar novo livro';
+
     this.carregarEditoras();
     this.carregarAutores();
     this.carregarGeneros();
     this.carregarFornecedores();
 
-    this.titulo = this.dados.estaEditando ? 'Editar livro' : 'Adicionar novo livro';
+    this.livroForm = new FormGroup({
+      titulo: new FormControl(this.dados.registro?.titulo || '', Validators.required),
+      data_publicacao: new FormControl(converterParaDataSemFusoHorario(this.dados.registro?.data_publicacao) || '', Validators.required),
+      preco: new FormControl(this.dados.registro?.preco || '', [Validators.required, Validators.min(1)]),
+      numero_paginas: new FormControl(this.dados.registro?.numero_paginas || '', Validators.required),
+      genero_id: new FormControl(this.dados.registro?.genero_id || '', Validators.required),
+      editora_id: new FormControl(this.dados.registro?.editora_id || '', Validators.required),
+      autor_id: new FormControl(this.dados.registro?.autor_id || '', Validators.required),
+      fornecedor_id: new FormControl(this.dados.registro?.fornecedor_id || '', Validators.required),
+    })
   }
 
   carregarEditoras(): void {
@@ -111,16 +115,31 @@ export class FormularioLivroComponent implements OnInit{
         data_publicacao: DataFormatada
       };
       
-      this.livroService.salvarNovo(livroData).subscribe({
-        next: res => {
-          this.dialogRef.close();
-          this.snackBar.open('Novo livro cadastrado com sucesso', 'Fechar', { duration: 3000 })
-        },
-        error: err => {
-          console.error('Erro ao salvar livro:', err)
-          this.snackBar.open('Erro ao cadastrar livro, tente novamente', 'Fechar', { duration: 3000 })
-        }
-      }) 
+      if(this.estaEditando){
+        this.livroService.editarRegistro({ ...this.dados.registro, ...livroData }).subscribe({
+          next: res => {
+            this.dialogRef.close();
+            this.snackBar.open('Registro alterado com sucesso', 'Fechar', { duration: 3000 })
+            this.livroService.atualizaConsulta.next(1);
+          },
+          error: err => {
+            console.error('Erro ao atualizar registro:', err);
+            this.snackBar.open('Erro ao alterar o registro', 'Fechar', { duration: 3000 })
+          }
+        })
+      } else {
+        this.livroService.salvarNovo(livroData).subscribe({
+          next: res => {
+            this.dialogRef.close();
+            this.snackBar.open('Novo livro cadastrado com sucesso', 'Fechar', { duration: 3000 })
+            this.livroService.atualizaConsulta.next(1);
+          },
+          error: err => {
+            console.error('Erro ao salvar livro:', err)
+            this.snackBar.open('Erro ao cadastrar livro, tente novamente', 'Fechar', { duration: 3000 })
+          }
+        }) 
+      }
     }
   }
 }

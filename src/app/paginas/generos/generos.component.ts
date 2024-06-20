@@ -19,9 +19,19 @@ export class GenerosComponent implements OnInit{
     'Descrição': 'descricao'
   };
 
-  constructor(private generoService: GeneroService) {}
+  constructor(private generoService: GeneroService) {
+    this.generoService.acao$.subscribe(({
+      next: (res) => {
+        this.listarGeneros()
+      }
+    }))
+  }
 
   ngOnInit(): void {
+    this.listarGeneros();  
+  }
+
+  listarGeneros() {
     this.generoService.obterTodos().subscribe((generos: Genero[]) => {
       this.generos = generos;
     })

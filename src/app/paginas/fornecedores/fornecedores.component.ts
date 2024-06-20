@@ -21,9 +21,19 @@ export class FornecedoresComponent implements OnInit {
     'E-mail': 'email'
   };
 
-  constructor(private fornecedorService: FornecedorService) {}
+  constructor(private fornecedorService: FornecedorService) {
+    this.fornecedorService.acao$.subscribe(({
+      next: (res) => {
+        this.listaFornecedores()
+      }
+    }))
+  }
 
   ngOnInit(): void {
+    this.listaFornecedores();
+  }
+
+  listaFornecedores() {
     this.fornecedorService.obterTodos().subscribe((listaFornecedores) => {
       this.fornecedores = listaFornecedores;
     });

@@ -8,6 +8,7 @@ import { EditorasComponent } from './paginas/editoras/editoras.component';
 import { FornecedoresComponent } from './paginas/fornecedores/fornecedores.component';
 import { FormasPagamentoComponent } from './paginas/formas-pagamento/formas-pagamento.component';
 import { AvaliacoesComponent } from './paginas/avaliacoes/avaliacoes.component';
+import { ItensPedidoComponent } from './paginas/itensPedidos/itens-pedido.component';
 
 export const routes: Routes = [
   {
@@ -50,5 +51,9 @@ export const routes: Routes = [
   {
     path: 'avaliacoes',
     component: AvaliacoesComponent
+  },
+  {
+    path: 'pedidos/:id/itens',
+    component: ItensPedidoComponent
   }
 ];

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { AutorService } from '../../services/autorService/autor.service';
 import { Autor } from './autor';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +16,7 @@ import { TabelaComponent } from '../../componentes/tabela/tabela.component';
     RouterLink,
     HttpClientModule,
     MatIconModule,
-    MatTableModule, 
+    MatTableModule,
     TabelaComponent
   ],
   templateUrl: './autores.component.html',
@@ -33,14 +33,21 @@ export class AutoresComponent implements OnInit {
     'Data de Nascimento': 'data_nascimento'
   };
 
+  constructor(private autorService: AutorService) {
+    this.autorService.acao$.subscribe(({
+      next: (res) => {
+        this.listarAutores()
+      }
+    }))
+  }
 
-  constructor(private autorService: AutorService) {}
-  
   ngOnInit() {
+    this.listarAutores(); 
+  }
+
+  listarAutores() {
     this.autorService.obterTodos().subscribe((listaAutores) => {
       this.autores = listaAutores;
     });
   }
-
-
 }

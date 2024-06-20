@@ -20,3 +20,17 @@
   padding: 4px;
   margin: 0 2.5px;
 }
+
+.botao-adicionar{
+  color: #19ca77; 
+  background-color: #f3f6f5; 
+  padding: 4px;
+  margin: 0 2.5px;
+}
+
+.botao-visualizar{
+  color: #3f577f; 
+  background-color: #e8f0fe; 
+  padding: 4px;
+  margin: 0 2.5px;
+}

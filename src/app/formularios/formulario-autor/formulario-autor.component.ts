@@ -35,7 +35,7 @@ export class FormularioAutorComponent implements OnInit {
     private datePipe: DatePipe, 
     private autorService: AutorService, 
     private dialogRef: MatDialogRef<FormularioAutorComponent>,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,  
     @Inject(MAT_DIALOG_DATA) public dados: any
     
   ) {}
@@ -65,9 +65,10 @@ export class FormularioAutorComponent implements OnInit {
           next: res => {
             this.dialogRef.close();
             this.snackBar.open('Registro alterado com sucesso', 'Fechar', { duration: 3000 })
+            this.autorService.atualizaConsulta.next(1);
           },
           error: err => {
-            console.log('Erro ao atualizar autor:', err);
+            console.error('Erro ao atualizar registro:', err);
             this.snackBar.open('Erro ao alterar o registro', 'Fechar', { duration: 3000 })
           }
         })
@@ -76,6 +77,7 @@ export class FormularioAutorComponent implements OnInit {
           next: res => {
             this.dialogRef.close();
             this.snackBar.open('Autor salvo com sucesso', 'Fechar', { duration: 3000 })
+            this.autorService.atualizaConsulta.next(1);
           },
           error: err => {
             console.error('Erro ao salvar autor:', err)

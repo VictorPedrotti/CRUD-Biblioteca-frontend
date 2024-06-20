@@ -1,1 +1,34 @@
-<p>formulario-pedido works!</p>
+<div class="conteudo-dialog">
+  <h1 mat-dialog-title class="titulo">Adicionar novo pedido</h1>
+  <form [formGroup]="pedidoForm" class="form-container" (ngSubmit)="salvarPedido()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Data do Pedido</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data_pedido" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="cliente_id" placeholder="Selecione o Cliente">
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field><mat-form-field appearance="outline" class="form-field">
+      <mat-label>Forma de Pagamento</mat-label>
+      <mat-select formControlName="forma_pagamento_id" placeholder="Selecione a Forma de Pagamento">
+        <mat-option *ngFor="let formaPagamento of formasPagamento" [value]="formaPagamento.id">
+          {{ formaPagamento.descricao }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div mat-dialog-action [align]="'end'" class="botoes">
+      <button mat-raised-button mat-dialog-close class="botao-cancelar">Cancelar</button>
+      <button 
+          [disabled]="pedidoForm.invalid"
+          [ngClass]="pedidoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
+          type="submit">Salvar
+      </button>
+  </div>
+  </form>
+</div>

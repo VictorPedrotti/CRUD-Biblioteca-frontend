@@ -26,9 +26,19 @@ export class LivrosComponent implements OnInit{
     'Fornecedor': 'fornecedor_id',
   };
 
-  constructor(private livroService: LivroService) {}
+  constructor(private livroService: LivroService) {
+    this.livroService.acao$.subscribe(({
+      next: (res) => {
+        this.listarLivros()
+      }
+    }))
+  }
   
   ngOnInit(): void {
+    this.listarLivros();
+  }
+
+  listarLivros() {
     this.livroService.obterTodos().subscribe((livros: Livro[]) => {
       this.livros = livros;
     })

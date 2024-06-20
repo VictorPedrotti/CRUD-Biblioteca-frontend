@@ -32,18 +32,17 @@ export class FormularioClienteComponent implements OnInit {
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public dados: any
 
-  ) {
-
-  }
+  ) {}
+  
   ngOnInit(): void {
     this.estaEditando = this.dados.estaEditando;
     this.titulo = this.estaEditando ? 'Editar avaliação' : 'Adicionar nova avaliação';
 
     this.clienteForm = new FormGroup({
-      nome: new FormControl(this.dados.registro.nome || '', Validators.required),
-      cpf: new FormControl(this.dados.registro.cpf || '', [Validators.required, Validators.minLength(11)]),
-      email: new FormControl(this.dados.registro.email || '', [Validators.required, Validators.email]),
-      telefone: new FormControl(this.dados.registro.telefone || '', Validators.required),
+      nome: new FormControl(this.dados.registro?.nome || '', Validators.required),
+      cpf: new FormControl(this.dados.registro?.cpf || '', [Validators.required, Validators.minLength(11)]),
+      email: new FormControl(this.dados.registro?.email || '', [Validators.required, Validators.email]),
+      telefone: new FormControl(this.dados.registro?.telefone || '', Validators.required),
     })
   }
 
@@ -56,6 +55,7 @@ export class FormularioClienteComponent implements OnInit {
           next: res => {
             this.dialogRef.close();
             this.snackBar.open('Registro alterado com sucesso', 'Fechar', { duration: 3000 })
+            this.clienteService.atualizaConsulta.next(1);
           },
           error: err => {
             console.log('Erro ao atualizar registro:', err);
@@ -67,6 +67,7 @@ export class FormularioClienteComponent implements OnInit {
           next: res => {
             this.dialogRef.close();
             this.snackBar.open('Cliente salvo com sucesso', 'Fechar', { duration: 3000 })
+            this.clienteService.atualizaConsulta.next(1);
           },
           error: err => {
             console.error('Erro ao salvar cliente:', err)

@@ -23,9 +23,19 @@ export class AvaliacoesComponent {
     'Comentário': 'comentario'
   };
 
-  constructor(private avaliacaoService: AvaliacaoService) {}
+  constructor(private avaliacaoService: AvaliacaoService) {
+    this.avaliacaoService.acao$.subscribe(({
+      next: (res) => {
+        this.listarAvaliacoes()
+      }
+    }))
+  }
 
   ngOnInit(): void {
+    this.listarAvaliacoes();
+  } 
+
+  listarAvaliacoes() {
     this.avaliacaoService.obterTodos().subscribe((listaAvaliacoes) => {
       this.avaliacoes = listaAvaliacoes;
     });

@@ -22,9 +22,19 @@ export class EditorasComponent implements OnInit {
     'Data de Fundação': 'data_fundacao'
   };
 
-  constructor(private editoraService: EditoraService) {}
+  constructor(private editoraService: EditoraService) {
+    this.editoraService.acao$.subscribe(({
+      next: (res) => {
+        this.listarEditoras()
+      }
+    }))
+  }
 
   ngOnInit() {
+   this.listarEditoras(); 
+  }
+
+  listarEditoras(){
     this.editoraService.obterTodos().subscribe((listaEditoras) => {
       this.editoras = listaEditoras;
     });

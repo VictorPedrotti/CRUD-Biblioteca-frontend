@@ -1,5 +1,5 @@
 <div class="conteudo-dialog">
-  <h1 mat-dialog-title class="titulo">Adicionar novo livro</h1>
+  <h1 mat-dialog-title class="titulo">{{titulo}}</h1>
   <form [formGroup]="avaliacaoForm" class="form-container" (ngSubmit)="salvarAvaliacao()">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Cliente</mat-label>
